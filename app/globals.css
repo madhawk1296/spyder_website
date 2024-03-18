@@ -2,26 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.hide-spinners::-webkit-outer-spin-button,
+.hide-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.smoothe-slow {
+  transition-property: all;
+  transition-duration: 500ms;
+}
+
+.smoothe {
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.smoothe-fast {
+  transition-property: all;
+  transition-duration: 100ms;
+}
+
+.hide-spinners {
+    -moz-appearance: textfield;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.graphiql-doc-explorer .doc-category-title[data-category-name="all schema types"] {
+  display: none;
 }
