@@ -6,7 +6,6 @@ import Home from "@/components/icons/Home";
 import { usePathname } from "next/navigation";
 import Spidey from "@/components/logos/Spidey";
 import Map from "@/components/icons/Map";
-import User from "@/components/icons/User";
 import AccountOptions from "./AccountOptions";
 import CurlyBraces from "@/components/icons/CurlyBraces";
 

@@ -3,20 +3,15 @@
 import User from "@/components/icons/User";
 import kanit from "@/fonts/kanit";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { supabaseBrowserClient } from "@/clients/browser/supabase";
+import { useEffect, useRef, useState } from "react";
 import logout from "@/actions/logout";
 import AccountOption from "./AccountOption";
-import Link from "next/link";
 
 export default function AccountOptions() {
     const router = useRouter()
     const [menu, setMenu] = useState(false)
     const menuRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null);
-    router.prefetch("/dashboard/user/plans")
-
-
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
