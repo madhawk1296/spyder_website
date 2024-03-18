@@ -24,7 +24,9 @@ export default async function Layout({ children }: { children: ReactNode}) {
 
     return (
         <CreateSubgraphProvider>
-            <Subgraphs children={children} subgraphs={schemas} limitReached={limitReached} />
+            <Subgraphs subgraphs={schemas} limitReached={limitReached} >
+                {children}
+            </Subgraphs>
         </CreateSubgraphProvider>
     )
 }

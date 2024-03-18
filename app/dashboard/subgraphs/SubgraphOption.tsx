@@ -1,4 +1,3 @@
-import { SubgraphType } from "@/types/tables";
 import Link from "next/link";
 
 export default function SubgraphOption({ subgraph, selected }: { subgraph: {schema_name: string}, selected: boolean }) {

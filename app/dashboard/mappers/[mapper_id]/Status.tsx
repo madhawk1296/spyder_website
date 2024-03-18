@@ -42,7 +42,7 @@ export default function Status({ status }: { status: "ACTIVE" | "INACTIVE"}) {
                     </button>
                     {menu && (
                             <div ref={menuRef} className="absolute -right-[10px] translate-x-full -translate-y-1/2 w-fit h-fit bg-gray-200 border-2 rounded-lg shadow flex flex-col gap-[2px] overflow-hidden">
-                                {actions.map(action => <Action action={action} />)}
+                                {actions.map((action, index) => <Action key={index} action={action} />)}
                             </div>
                         )}
                 </div>

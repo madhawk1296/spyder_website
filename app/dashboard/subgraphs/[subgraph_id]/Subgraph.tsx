@@ -13,7 +13,7 @@ export default async function Subgraph({ subgraph, tables }: { subgraph: string,
                 </div>
                 <div className="border rounded-xl w-full border-gray-500"></div>
                 <div className="flex flex-col gap-2">
-                    {tables.map(table => <Collection schema={subgraph} table={table} />)}
+                    {tables.map((table, index) => <Collection key={index} schema={subgraph} table={table} />)}
                 </div>
             </div>
         </div>

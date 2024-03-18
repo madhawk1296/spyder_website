@@ -8,7 +8,7 @@ export default function Field({ field }: { field: CollectionType }) {
         <div className={`flex flex-col gap-2 text-sm tracking-wide ${kanit.medium}`}>
             <h1 className=""><span className="text-blue-500">{name}</span> (</h1>
             <div className="flex flex-col gap-2 px-[15px]">
-                {columns.map(column => <Column column={column.name} />)}
+                {columns.map((column, index) => <Column key={index} column={column.name} />)}
             </div>
             )
         </div>

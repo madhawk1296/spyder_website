@@ -9,7 +9,7 @@ export default function MapInput({ title, options, value, index, changeInput }: 
         <div className="w-full flex justify-between items-center border rounded-xl">
             <h1 className="text-xs px-[10px] py-[5px]">{title}</h1>
             <select onChange={handleChange} value={value} className="text-xs outline-gray-500 tracking-wide rounded-lg bg-gray-200 px-[10px] py-[5px]">
-                {options.map(option => <option value={option}>{option}</option>)}
+                {options.map((option, index) => <option key={index} value={option}>{option}</option>)}
             </select>
         </div>
     )

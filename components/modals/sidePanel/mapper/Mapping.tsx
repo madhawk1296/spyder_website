@@ -51,7 +51,7 @@ export default function Mapping({ index, mapping, event, subgraph, addMapping, r
             <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between border-b-2 pb-[2px]">
                     <select onChange={changeCollection} className={`text-sm ${kanit.medium} tracking-wide text-gray-800 outline-none border-2 rounded-lg p-[3px]`} >
-                        {collections.map(collection => <option value={collection.name}>{collection.name}</option>)}
+                        {collections.map((collection, index) => <option key={index} value={collection.name}>{collection.name}</option>)}
                     </select>
                     <h1 className={`text-sm ${kanit.medium} tracking-wide text-gray-800`}>Events</h1>
                 </div>
