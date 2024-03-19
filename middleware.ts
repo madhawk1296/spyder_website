@@ -15,11 +15,11 @@ export async function middleware(req: NextRequest) {
 
     if(session) {
         if (section == "sign-in" || section == "sign-up") {
-            return NextResponse.redirect("http://localhost:3000/dashboard/")
+            return NextResponse.redirect(new URL('/dashboard/', req.url))
         }
     } else {
         if (section != "sign-in" && section != "sign-up") {
-            return NextResponse.redirect("http://localhost:3000/dashboard/sign-in")
+            return NextResponse.redirect(new URL('/dashboard/sign-in', req.url))
         }
     }
 
