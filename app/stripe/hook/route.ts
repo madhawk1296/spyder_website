@@ -19,10 +19,10 @@ export async function POST(req: NextRequest){
 
     // Handle the event
     switch (event.type) {
-        case 'subscription_schedule.canceled':
+        case 'customer.subscription.deleted':
             try {
-                const { subscription } = event.data.object as Stripe.SubscriptionSchedule
-                const { error } = await supabase.from("users").update({ subscription_tier: 1, subscription_id: null }).eq("subscription_id", (subscription as Stripe.Subscription).id)
+                const subscription = event.data.object as Stripe.Subscription
+                const { error } = await supabase.from("users").update({ subscription_tier: 1, subscription_id: null }).eq("subscription_id", subscription.id)
 
                 if(error) {
                     throw Error(error.message)
