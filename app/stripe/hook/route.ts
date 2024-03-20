@@ -25,18 +25,17 @@ export async function POST(req: NextRequest){
                 const { client_reference_id, id } = event.data.object as Stripe.Checkout.Session;
                 console.log({ client_reference_id, id })
 
-                const { line_items } = await stripe.checkout.sessions.retrieve(
+                const { line_items, subscription } = await stripe.checkout.sessions.retrieve(
                     id,
                     {
-                      expand: ["line_items"],
+                      expand: ["line_items", "subscription"],
                     }
                 );
 
-                console.log(line_items?.data[0].price!)
+                console.log({subscription})
                 const productId = line_items?.data[0].price!.product! as string
 
                 const { data: subscriptionTiers, error } = await supabase.from("subscription_tiers").select().eq("prod_id", productId)
-                console.log({ subscriptionTiers})
 
                 if(error) {
                     throw new Error(error.message)
