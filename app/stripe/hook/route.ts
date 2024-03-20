@@ -32,7 +32,6 @@ export async function POST(req: NextRequest){
                     }
                 );
 
-                console.log({subscription})
                 const productId = line_items?.data[0].price!.product! as string
 
                 const { data: subscriptionTiers, error } = await supabase.from("subscription_tiers").select().eq("prod_id", productId)
@@ -41,7 +40,7 @@ export async function POST(req: NextRequest){
                     throw new Error(error.message)
                 }
 
-                const { error: updateError } = await supabase.from("users").update({ subscription_tier: subscriptionTiers[0].id}).eq("user_id", client_reference_id!)
+                const { error: updateError } = await supabase.from("users").update({ subscription_tier: subscriptionTiers[0].id, subscription_id: (subscription as Stripe.Subscription).id }).eq("user_id", client_reference_id!)
 
                 if(updateError) {
                     throw new Error(updateError.message)
