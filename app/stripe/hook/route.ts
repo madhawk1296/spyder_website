@@ -14,16 +14,26 @@ export async function POST(req: NextRequest){
         const body = await req.text()
         event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_ENDPOINT_SECRET!)
     } catch (e: any) {
-        console.log(process.env.STRIPE_ENDPOINT_SECRET!)
         return new NextResponse(`Webhook Error: ${e.message}`, { status: 400 });
     }
 
     // Handle the event
     switch (event.type) {
+        case 'subscription_schedule.canceled':
+            try {
+                const { subscription } = event.data.object as Stripe.SubscriptionSchedule
+                const { error } = await supabase.from("users").update({ subscription_tier: 1, subscription_id: null }).eq("subscription_id", (subscription as Stripe.Subscription).id)
+
+                if(error) {
+                    throw Error(error.message)
+                }
+                
+            } catch(e: any) {
+                return new NextResponse(`Recieved Event, but unable to process: ${e.message}`, { status: 400 });
+            }
         case 'checkout.session.completed':
             try {
                 const { client_reference_id, id } = event.data.object as Stripe.Checkout.Session;
-                console.log({ client_reference_id, id })
 
                 const { line_items, subscription } = await stripe.checkout.sessions.retrieve(
                     id,

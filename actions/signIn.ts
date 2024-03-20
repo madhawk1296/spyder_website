@@ -10,7 +10,6 @@ export default async function signIn(formData: FormData): Promise<{error: string
 
     try {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-        console.log(data)
 
         if(error) {
             throw Error(error.message)

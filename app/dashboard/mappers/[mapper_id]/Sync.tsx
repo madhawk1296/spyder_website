@@ -17,7 +17,6 @@ import fetcher from '@/tools/fetcher';
 export default function Sync({ currentBlock, latestBlock, status, mapperId }: { currentBlock: number, latestBlock: number, status: "INACTIVE" | "ACTIVE", mapperId: number}) {
     const router = useRouter()
     const { data: {data: block}, error, isLoading } = useSWR(`/api/mapper/${mapperId}`, fetcher, { refreshInterval: 1000, fallbackData: { data: currentBlock} })
-    console.log(block)
     const percent = block / latestBlock 
     const isActive = status == "ACTIVE"
 
