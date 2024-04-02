@@ -14,7 +14,7 @@ export default function ForeignKeys({ foreignKeys, addForeignKey, changeForeignK
                 <ColumnTitle title="Primary" />
             </div>
             <div className="flex flex-col w-full relative gap-2">
-                {foreignKeys.map((foreignKey, index) => <ForeignKey key={index} index={index} foreignKey={foreignKey} changeForeignKey={changeForeignKey} />)}
+                {/*foreignKeys.map((foreignKey, index) => <ForeignKey key={index} index={index} foreignKey={foreignKey} changeForeignKey={changeForeignKey} />)*/}
             </div>
             <button onClick={addForeignKey} type="button" className="w-fit px-[10px] py-[5px] border-2 shadow text-xs rounded-lg shadow" >Add Foreign Key</button>
         </div>
