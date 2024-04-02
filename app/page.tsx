@@ -1,6 +1,5 @@
 import kanit from "@/fonts/kanit";
 import Nav from "./Nav";
-import Features from "./Features";
 import Pricing from "./Pricing";
 import Appear from "./Appear";
 import FAQ from "./FAQ";
