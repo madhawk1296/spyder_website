@@ -1,13 +1,15 @@
 'use client';
 
 import { useContext, useState } from "react"
-import { CreateCollectionContext } from "../../providers/CreateCollectionProvider"
-import Input from "./Input"
-import Button from "./Button"
+import { CreateCollectionContext } from "../../../providers/CreateCollectionProvider"
+import Input from "../Input"
+import Button from "../Button"
 import addCollection from "@/actions/addCollection"
 import { useRouter } from "next/navigation";
 import ColumnTitle from "./ColumnTitle";
 import Column from "./Column";
+import Columns from "./Columns";
+import ForeignKeys from "./ForeignKeys";
 
 export type ColumnType = {
     name: string,
@@ -16,10 +18,17 @@ export type ColumnType = {
     primary: boolean
 }
 
+export type ForeignKeyType = {
+    name: string,
+    collection: string,
+    column: string
+}
+
 export default function CreateCollectionModal({ schema }: { schema: string }) {
     const router = useRouter()
     const { menu, toggleMenu } = useContext(CreateCollectionContext)
     const [columns, setColumns] = useState<ColumnType[]>([])
+    const [foreignKeys, setForeignKeys] = useState<ForeignKeyType[]>([])
 
     const addColumn = () => {
         setColumns([...columns, {name: "", type: "", defaultValue: "", primary: false}])
@@ -30,6 +39,18 @@ export default function CreateCollectionModal({ schema }: { schema: string }) {
             const newColumns = [...currentColumns];
             newColumns[index] = column;
             return newColumns;
+        });
+    }
+
+    const addForeignKey = () => {
+        setForeignKeys([...foreignKeys, {name: "", collection: "default", column: "string" }])
+    }
+
+    const changeForeignKey = (index: number, foreignKey: ForeignKeyType) => {
+        setForeignKeys(currentForeignKeys => {
+            const newForeignKeys = [...currentForeignKeys];
+            newForeignKeys[index] = foreignKey;
+            return newForeignKeys;
         });
     }
 
@@ -55,24 +76,12 @@ export default function CreateCollectionModal({ schema }: { schema: string }) {
                         <Input title="Name" name="name" placeholder="collection_name" />
                     </div>
                     <div className="border w-full "/>
-                    <div className="flex flex-col w-full p-[20px] gap-3 w-full ">
-                        <div className="flex items-center w-full">
-                            <h1 className="font-medium tracking-wide text-gray-800">Columns</h1>
-                        </div>
-                        <div className="flex items-center w-full gap-2">
-                            <ColumnTitle title="Name" />
-                            <ColumnTitle title="Type" />
-                            <ColumnTitle title="Default Value" />
-                            <ColumnTitle title="Primary" />
-                        </div>
-                        <div className="flex flex-col w-full relative gap-2">
-                            {columns.map((column, index) => <Column key={index} index={index} column={column} changeColumn={changeColumn} />)}
-                        </div>
-                        <button onClick={addColumn} type="button" className="w-fit px-[10px] py-[5px] border-2 shadow text-xs rounded-lg shadow" >Add Column</button>
-                    </div>
+                    <Columns columns={columns} addColumn={addColumn} changeColumn={changeColumn} />
+                    <div className="border w-full "/>
+                    <ForeignKeys />
                 </div>
                 <div className="flex flex-shrink min-h-[80px] w-full border-t-2 justify-end items-center gap-4 px-[20px]">
-                    <Button title="Cancel" color="gray" />
+                    <Button onClick={toggleMenu} title="Cancel" color="gray" />
                     <Button title="Save" />
                 </div>
             </form>

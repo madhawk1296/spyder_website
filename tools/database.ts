@@ -2,7 +2,7 @@
 
 import { defaultPgClient, pgClient } from "@/clients/pg";
 import { supabaseServerClient } from "@/clients/supabase";
-import { ColumnType } from "@/components/modals/sidePanel/CreateCollectionModal";
+import { ColumnType } from "@/components/modals/sidePanel/subgraph/CreateCollectionModal";
 import { SubgraphType } from "@/types/subgraph";
 
 export async function getSchemas(userId: string) {

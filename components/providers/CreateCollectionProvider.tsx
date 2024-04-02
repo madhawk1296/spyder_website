@@ -1,7 +1,7 @@
 'use client'
 
 import { ReactNode, createContext, useState } from "react"
-import CreateCollectionModal from "../modals/sidePanel/CreateCollectionModal"
+import CreateCollectionModal from "../modals/sidePanel/subgraph/CreateCollectionModal"
 
 export const CreateCollectionContext = createContext({
     menu: false,

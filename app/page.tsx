@@ -19,7 +19,6 @@ export default function Home() {
           </Link>
           <button className="mt-[15px] self-center text-2xl bg-white py-[10px] px-[15px] rounded-xl shadow-md text-gray-700 border-2 tracking-wide smoothe hover:bg-gray-100 hover:shadow-lg w-fit">View Pricing</button>
         </div>
-        <Features />
       </Appear>
       <Pricing />
       <FAQ />

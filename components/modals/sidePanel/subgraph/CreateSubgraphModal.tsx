@@ -1,9 +1,9 @@
 'use client';
 
 import { useContext, useState } from "react"
-import { CreateSubgraphContext } from "../../providers/CreateSubgraphProvider"
-import Input from "./Input"
-import Button from "./Button"
+import { CreateSubgraphContext } from "../../../providers/CreateSubgraphProvider"
+import Input from "../Input"
+import Button from "../Button"
 import createSubgraph from "@/actions/createSubgraph"
 import { useRouter } from "next/navigation";
 import ColumnTitle from "./ColumnTitle";
@@ -31,7 +31,6 @@ export default function CreateSubgraphModal() {
                 <div className="flex flex-grow flex-col overflow-scroll">
                     <div className="flex flex-col gap-4 p-[20px]">
                         <Input title="Name" name="name" placeholder="new_subgraph" />
-                        <Input title="Description" name="description" placeholder="Optional" />
                     </div>
                     <div className="border w-full "/>
                 </div>

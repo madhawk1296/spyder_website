@@ -1,7 +1,7 @@
 'use client'
 
 import { ReactNode, createContext, useState } from "react"
-import CreateSubgraphModal from "../modals/sidePanel/CreateSubgraphModal"
+import CreateSubgraphModal from "../modals/sidePanel/subgraph/CreateSubgraphModal"
 
 export const CreateSubgraphContext = createContext({
     menu: false,
