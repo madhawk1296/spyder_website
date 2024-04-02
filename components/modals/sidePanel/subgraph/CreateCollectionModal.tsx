@@ -6,10 +6,7 @@ import Input from "../Input"
 import Button from "../Button"
 import addCollection from "@/actions/addCollection"
 import { useRouter } from "next/navigation";
-import ColumnTitle from "./ColumnTitle";
-import Column from "./Column";
 import Columns from "./Columns";
-import ForeignKeys from "./ForeignKeys";
 
 export type ColumnType = {
     name: string,
@@ -78,7 +75,6 @@ export default function CreateCollectionModal({ schema }: { schema: string }) {
                     <div className="border w-full "/>
                     <Columns columns={columns} addColumn={addColumn} changeColumn={changeColumn} />
                     <div className="border w-full "/>
-                    <ForeignKeys />
                 </div>
                 <div className="flex flex-shrink min-h-[80px] w-full border-t-2 justify-end items-center gap-4 px-[20px]">
                     <Button onClick={toggleMenu} title="Cancel" color="gray" />
