@@ -1,30 +1,30 @@
 import kanit from "@/fonts/kanit";
 import Plan from "./Plan";
 import PlanFeature from "./PlanFeature";
+import { RefObject } from "react";
+import { SubscriptionType } from "@/types/tables";
 
-export default function Pricing() {
+export default function Pricing({ plans, currentRef }: { plans: SubscriptionType[], currentRef: RefObject<HTMLDivElement> }) {
+    const developer = plans.find(plan => plan.name == "developer")!
+    const business = plans.find(plan => plan.name == "business")!
+
     return (
-        <div className="flex flex-col gap-8 pt-[50px] items-center">
+        <div ref={currentRef} className="flex flex-col gap-8 pt-[50px] items-center">
             <div className="flex flex-col items-center gap-4">
                 <h1 className={`text-5xl ${kanit.bold} text-gray-700 tracking-wide`}>The easiest way to build subgraphs</h1>
                 <h1 className={`text-2xl ${kanit.light} text-gray-700 tracking-wide text-center`}>Save weeks of dev time and headache<br/> so you can focus on building your app.</h1>
             </div>
             <div className="flex gap-8">
-                <Plan title="Starter" price={0} buttonTitle="Start for Free" >
-                    <PlanFeature title="1 subgraph" />
-                    <PlanFeature title="1 mapper" />
-                    <PlanFeature title="0.5 GB database storage" />
-                </Plan>
-                <Plan highlight={true} title="Developer" price={19} buttonTitle="Get Started" >
-                    <PlanFeature title="5 subgraphs" />
-                    <PlanFeature title="5 mappers" />
-                    <PlanFeature title="8 GB database storage" />
+                <Plan highlight={true} title="Developer" price={developer.price} buttonTitle="Start Free Trail" >
+                    <PlanFeature title={`${developer.subgraph_limit || "Unlimited"} subgraphs`} />
+                    <PlanFeature title={`${developer.mapper_limit || "Unlimited"} mappers`} />
+                    <PlanFeature title={`${developer.database_storage} GB database storage`} />
                     <PlanFeature title="Email support" />
                 </Plan>
-                <Plan title="Business" price={69} buttonTitle="Get Started" >
-                    <PlanFeature title="unlimited subgraphs" />
-                    <PlanFeature title="unlimited mappers" />
-                    <PlanFeature title="50 GB database storage" />
+                <Plan title="Business" price={business.price} buttonTitle="Start Free Trail" >
+                    <PlanFeature title={`${business.subgraph_limit || "Unlimited"} subgraphs`} />
+                    <PlanFeature title={`${business.mapper_limit || "Unlimited"} mappers`} />
+                    <PlanFeature title={`${business.database_storage} GB database storage`} />
                     <PlanFeature title="Email support" />
                 </Plan>
             </div> 

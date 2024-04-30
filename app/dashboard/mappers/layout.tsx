@@ -9,6 +9,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
     const supabase = supabaseServerClient()
     const { data: { user } } = await supabase.auth.getUser()
     const { data: mappers } = await supabase.from("mappers").select()
+    const { data: chains } = await supabase.from("chains").select()
 
     const subgraphs = await getSubgraphs(user!.id)
 
@@ -21,7 +22,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
     }
 
     return (
-        <CreateMapperProvider subgraphs={subgraphs}>
+        <CreateMapperProvider subgraphs={subgraphs} chains={chains!} >
             <Mappers mappers={mappers!} limitReached={limitReached} >
                 {children}
             </Mappers>

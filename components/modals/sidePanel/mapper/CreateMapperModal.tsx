@@ -12,6 +12,8 @@ import SubgraphInput from "./SubgraphInput";
 import { SubgraphType } from "@/types/subgraph";
 import createMapper from "@/actions/createMapper";
 import SwitchInput from "../SwitchInput";
+import Select from "../Select";
+import { ChainType } from "@/types/tables";
 
 export type SmartContractType = {
     name: string,
@@ -31,7 +33,7 @@ export type MappingType = {
     event: string
 }
 
-export default function CreateMapperModal({ subgraphs }: { subgraphs: SubgraphType[]}) {
+export default function CreateMapperModal({ subgraphs, chains }: { subgraphs: SubgraphType[], chains: ChainType[]}) {
     const router = useRouter()
     const { menu, toggleMenu } = useContext(CreateMapperContext)
     const [runForever, setRunForever] = useState(true)
@@ -86,9 +88,9 @@ export default function CreateMapperModal({ subgraphs }: { subgraphs: SubgraphTy
         formData.set("mappings", JSON.stringify(mappings))
 
         const { data, error } = await createMapper(formData)
-        console.log(error)
         router.refresh()
-      }
+        toggleMenu()
+    }
 
     return (
         <div className={`fixed left-0 top-0 h-screen w-screen pointer-events-none`}>
@@ -98,6 +100,7 @@ export default function CreateMapperModal({ subgraphs }: { subgraphs: SubgraphTy
                 <div className="flex flex-grow flex-col overflow-scroll">
                     <div className="flex flex-col gap-4 p-[20px]">
                         <Input title="Name" name="name" placeholder="name" />
+                        <Select title="Chain" name="chain" options={chains} />
                         <Input title="Starting Block" name="starting_block" placeholder="0" />
                         <SwitchInput title="Run Forever" value={runForever} onChange={changeRunForever}  />
                         {!runForever && <Input title="Ending Block" name="ending_block" placeholder="999" /> }

@@ -2,7 +2,7 @@
 
 import { defaultPgClient, pgClient } from "@/clients/pg";
 import { supabaseServerClient } from "@/clients/supabase";
-import { ColumnType } from "@/components/modals/sidePanel/subgraph/CreateCollectionModal";
+import { ColumnType, ForeignKeyType } from "@/components/modals/sidePanel/subgraph/CreateCollectionModal";
 import { SubgraphType } from "@/types/subgraph";
 
 export async function getSchemas(userId: string) {
@@ -57,8 +57,9 @@ export async function addTable(userId: string, schema: string, name: string, col
     const columnDefinitions = columns.map(column => {
         let columnDef = `"${column.name}" ${column.type.toUpperCase()}`;
         if (column.defaultValue) {
-            columnDef += ` DEFAULT ${column.defaultValue}`;
-        }
+            // Adjust for potential string values
+            const defaultValue = isNaN(Number(column.defaultValue)) ? `'${column.defaultValue}'` : column.defaultValue;
+            columnDef += ` DEFAULT ${defaultValue}`;        }
         if (column.primary) {
             columnDef += ' PRIMARY KEY';
         }
@@ -82,11 +83,11 @@ export async function addTable(userId: string, schema: string, name: string, col
     }
 }
 
-export async function getColumns(userId: string, schema: string, table: string): Promise<{ column_name: string }[]> {
+export async function getColumns(userId: string, schema: string, table: string): Promise<{ column_name: string, data_type: string }[]> {
     const pg = pgClient(userId)
     await pg.connect();
 
-    const columns = (await pg.query(`SELECT column_name 
+    const columns = (await pg.query(`SELECT column_name, data_type 
     FROM information_schema.columns 
     WHERE table_schema = '${schema}' AND table_name = '${table}';
     `)).rows;
@@ -120,26 +121,26 @@ export async function getRowCount(userId: string, schema: string, table: string)
 
 export async function getSubgraphs(userId: string): Promise<SubgraphType[]> {
     const schemas = await getSchemas(userId)
-    return await Promise.all(schemas.map(async schema => {
-        const { schema_name } = schema
+    return await Promise.all(schemas.map(async schema => await getSubgraph(userId, schema.schema_name)))
+}
 
-        const tables = await getTables(userId, schema_name)
-        const collections = await Promise.all(tables.map(async table => {
-            const { table_name } = table
-            const columns = (await getColumns(userId, schema_name, table_name)).map(column => {return {name: column.column_name}})
-
-            return {
-                name: table_name,
-                columns
-            }
-        }))
-
+export async function getSubgraph(userId: string, schema_name: string): Promise<SubgraphType> {
+    const tables = await getTables(userId, schema_name)
+    const collections = await Promise.all(tables.map(async table => {
+        const { table_name } = table
+        const columns = (await getColumns(userId, schema_name, table_name)).map(column => {return {name: column.column_name, data_type: column.data_type}})
 
         return {
-            name: schema_name,
-            collections
+            name: table_name,
+            columns
         }
     }))
+
+
+    return {
+        name: schema_name,
+        collections
+    }
 }
 
 export async function CreateDatabase(userId: string) {

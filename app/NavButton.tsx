@@ -1,5 +1,5 @@
-export default function NavButton({ title }: { title: string}) {
+export default function NavButton({ title, onClick }: { title: string, onClick: () => void }) {
     return (
-        <button className="text-xl tracking-wide text-gray-700">{title}</button>
+        <button onClick={onClick} className="text-xl tracking-wide text-gray-700">{title}</button>
     )
 }

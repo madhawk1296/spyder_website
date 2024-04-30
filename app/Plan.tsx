@@ -1,4 +1,5 @@
 import kanit from "@/fonts/kanit";
+import Link from "next/link";
 import { ReactNode } from "react";
 
 export default function Plan({ children, title, price, highlight=false, buttonTitle }: { children: ReactNode, title: string, price: number, highlight?: boolean, buttonTitle: string}) {
@@ -14,7 +15,9 @@ export default function Plan({ children, title, price, highlight=false, buttonTi
             <div className="flex flex-col gap-2 min-h-[200px]">
                 {children}
             </div>
-            <button className={`w-full shadow-md ${highlight ? "bg-red-500 hover:bg-red-600" : "bg-gray-700 hover:bg-gray-800"} hover:shadow-lg rounded-lg text-gray-50 py-[10px] smoothe tracking-wide`}>{buttonTitle}</button>
+            <Link href="/comingsoon">
+                <button className={`w-full shadow-md ${highlight ? "bg-red-500 hover:bg-red-600" : "bg-gray-700 hover:bg-gray-800"} hover:shadow-lg rounded-lg text-gray-50 py-[10px] smoothe tracking-wide`}>{buttonTitle}</button>
+            </Link>
         </div>
     )
 }

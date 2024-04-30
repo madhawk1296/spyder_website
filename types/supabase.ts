@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      chains: {
+        Row: {
+          id: number
+          name: string
+          rpc_endpoint: string
+          title: string
+        }
+        Insert: {
+          id?: number
+          name: string
+          rpc_endpoint: string
+          title: string
+        }
+        Update: {
+          id?: number
+          name?: string
+          rpc_endpoint?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      emails: {
+        Row: {
+          created_at: string
+          email: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: number
+        }
+        Relationships: []
+      }
       event_mappings: {
         Row: {
           action: string
@@ -38,6 +77,7 @@ export type Database = {
       }
       mappers: {
         Row: {
+          chain: string
           contract_abi: Json
           contract_address: string
           contract_name: string
@@ -53,6 +93,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          chain: string
           contract_abi: Json
           contract_address: string
           contract_name: string
@@ -68,6 +109,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          chain?: string
           contract_abi?: Json
           contract_address?: string
           contract_name?: string
@@ -83,6 +125,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "public_mappers_chain_fkey"
+            columns: ["chain"]
+            isOneToOne: false
+            referencedRelation: "chains"
+            referencedColumns: ["name"]
+          },
           {
             foreignKeyName: "public_mappers_user_id_fkey"
             columns: ["user_id"]

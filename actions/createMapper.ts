@@ -6,6 +6,7 @@ import { SubscriptionType } from "@/types/tables"
 
 export default async function createMapper(formData: FormData): Promise<{data: number | null, error: string | null}> {
     const name = formData.get("name") as string
+    const chain = formData.get("chain") as string
     const starting_block = Number(formData.get("starting_block"))
     const run_forever = (formData.get("run_forever") as string) === "true"
     const ending_block = run_forever ? null : Number(formData.get("ending_block"))
@@ -18,8 +19,7 @@ export default async function createMapper(formData: FormData): Promise<{data: n
     const supabase = supabaseServerClient()
     const { data: { user } } = await supabase.auth.getUser()
 
-
-    try {
+    try { 
         const { data: mappers} = await supabase.from("mappers").select().eq("user_id", user!.id)
 
         const { data: userData } = await supabase.from("users").select("*, subscription_tier(*)")
@@ -40,7 +40,7 @@ export default async function createMapper(formData: FormData): Promise<{data: n
             return event_mapping![0].id
         }))
 
-        const { data: mapper, error } = await supabase.from("mappers").insert({ status: "INACTIVE", starting_block, run_forever, ending_block, subgraph, name, contract_abi, contract_address, contract_name, user_id: user!.id, event_mappings}).select()
+        const { data: mapper, error } = await supabase.from("mappers").insert({ status: "INACTIVE", starting_block, run_forever, ending_block, subgraph, name, contract_abi, contract_address, contract_name, user_id: user!.id, event_mappings, chain}).select()
 
         if(error) {
             throw Error(error.message)

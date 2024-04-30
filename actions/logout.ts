@@ -9,13 +9,14 @@ export default async function logout() {
       const supabase = createServerActionClient({ cookies })
       const { error } = await supabase.auth.signOut()
 
+      console.log(error)
       if(error) {
         throw new Error (error.message)
       }
 
       return { error: null}
       
-    } catch(error) {
-      return { error }    
+    } catch(error: any ) {
+      return { error: error.message }    
   }
 }

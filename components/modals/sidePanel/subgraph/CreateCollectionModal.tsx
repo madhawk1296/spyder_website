@@ -7,6 +7,8 @@ import Button from "../Button"
 import addCollection from "@/actions/addCollection"
 import { useRouter } from "next/navigation";
 import Columns from "./Columns";
+import ForeignKeys from "./ForeignKeys";
+import { SubgraphType } from "@/types/subgraph";
 
 export type ColumnType = {
     name: string,
@@ -18,14 +20,15 @@ export type ColumnType = {
 export type ForeignKeyType = {
     name: string,
     collection: string,
-    column: string
+    column: string,
+    dataType: string
 }
 
-export default function CreateCollectionModal({ schema }: { schema: string }) {
+export default function CreateCollectionModal({ schema, subgraph }: { schema: string, subgraph: SubgraphType }) {
+    const { collections } = subgraph  
     const router = useRouter()
     const { menu, toggleMenu } = useContext(CreateCollectionContext)
     const [columns, setColumns] = useState<ColumnType[]>([])
-    const [foreignKeys, setForeignKeys] = useState<ForeignKeyType[]>([])
 
     const addColumn = () => {
         setColumns([...columns, {name: "", type: "", defaultValue: "", primary: false}])
@@ -39,8 +42,13 @@ export default function CreateCollectionModal({ schema }: { schema: string }) {
         });
     }
 
+    const deleteColumn = (index: number) => {
+        setColumns(columns.filter((column, i) => i !== index))
+    }
+
+    /*
     const addForeignKey = () => {
-        setForeignKeys([...foreignKeys, {name: "", collection: "default", column: "string" }])
+        setForeignKeys([...foreignKeys, {name: "", collection: collections[0].name, column:  collections[0].columns[0].name, dataType: collections[0].columns[0].data_type }])
     }
 
     const changeForeignKey = (index: number, foreignKey: ForeignKeyType) => {
@@ -51,10 +59,14 @@ export default function CreateCollectionModal({ schema }: { schema: string }) {
         });
     }
 
+    const deleteForeignKey = (index: number) => {
+        setForeignKeys(foreignKeys.filter((foreignKey, i) => i !== index))
+    }
+    */
+
+
     const handleAction = async (formData: FormData) => {
-        columns.forEach(column => {
-            formData.append("columns", JSON.stringify(column))
-        })
+        columns.forEach(column => formData.append("columns", JSON.stringify(column)))
 
         await addCollection(formData)
         router.refresh()
@@ -73,12 +85,11 @@ export default function CreateCollectionModal({ schema }: { schema: string }) {
                         <Input title="Name" name="name" placeholder="collection_name" />
                     </div>
                     <div className="border w-full "/>
-                    <Columns columns={columns} addColumn={addColumn} changeColumn={changeColumn} />
-                    <div className="border w-full "/>
+                    <Columns columns={columns} addColumn={addColumn} changeColumn={changeColumn} deleteColumn={deleteColumn} />
                 </div>
                 <div className="flex flex-shrink min-h-[80px] w-full border-t-2 justify-end items-center gap-4 px-[20px]">
                     <Button onClick={toggleMenu} title="Cancel" color="gray" />
-                    <Button title="Save" />
+                    <Button isSubmit={true} title="Save" />
                 </div>
             </form>
         </div>

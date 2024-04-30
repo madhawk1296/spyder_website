@@ -1,9 +1,10 @@
 import kanit from "@/fonts/kanit";
 import Question from "./Question";
+import { RefObject } from "react";
 
-export default function FAQ() {
+export default function FAQ({ currentRef }:  { currentRef: RefObject<HTMLDivElement>}) {
     return (
-        <div className="flex flex-col gap-10 pt-[75px] items-center">
+        <div ref={currentRef} className="flex flex-col gap-10 pt-[75px] items-center">
             <h1 className={`text-center text-5xl ${kanit.bold} tracking-wide text-gray-700`}>Frequently Asked Questions</h1>
             <div className="flex flex-col max-w-[900px] w-full gap-4">
                 <Question title="What does Spyder give me exactly?" answer="Spyder gives you the ability to fetch blockchain data and store it in a database with no code required. " />

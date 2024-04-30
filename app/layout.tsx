@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import kanit from '@/fonts/kanit'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: 'Spidey - Create Subgraphs in Minutes',
@@ -13,6 +14,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body>
         {children}
       </body>
+      <GoogleAnalytics gaId="AW-16548335604" />
     </html>
   )
 }

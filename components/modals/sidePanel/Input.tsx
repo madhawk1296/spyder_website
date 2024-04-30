@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react";
-import { on } from "stream";
 
 export default function Input({ title, name, placeholder, value, onChange }: { title: string, name: string, placeholder?: string, value?: string, onChange?: (value: string) => void }) {
 

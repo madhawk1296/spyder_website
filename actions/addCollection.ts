@@ -1,7 +1,7 @@
 'use server'
 
 import { supabaseServerClient } from "@/clients/supabase"
-import { ColumnType } from "@/components/modals/sidePanel/subgraph/CreateCollectionModal"
+import { ColumnType, ForeignKeyType } from "@/components/modals/sidePanel/subgraph/CreateCollectionModal"
 import { addTable, createSchema } from "@/tools/database"
 
 export default async function addCollection(formData: FormData): Promise<{error: string | null}> {
@@ -11,6 +11,5 @@ export default async function addCollection(formData: FormData): Promise<{error:
 
     const supabase = supabaseServerClient()
     const { data: { user } } = await supabase.auth.getUser()
-
     return await addTable(user!.id, schema, name, columns) 
 }
