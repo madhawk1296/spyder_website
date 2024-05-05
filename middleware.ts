@@ -18,18 +18,12 @@ export async function middleware(req: NextRequest) {
         subscription_tier(*)
     `).eq("user_id", user?.id!)
     const currentUser = users?.[0]
-    console.log(currentUser)
     
     if(currentUser) {
         if (section == "sign-in" || section == "sign-up") {
             return NextResponse.redirect(new URL('/dashboard/', req.url))
         }
 
-        if(!currentUser.subscription_id) {
-            const stripeLink = (currentUser.subscription_tier as any as SubscriptionType).stripe_link!
-            const userLink = `${stripeLink}?client_reference_id=${currentUser.user_id}`
-            return NextResponse.redirect(userLink)
-        }
     } else {
         if (section != "sign-in" && section != "sign-up") {
             return NextResponse.redirect(new URL('/dashboard/sign-in', req.url))

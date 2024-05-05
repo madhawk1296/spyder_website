@@ -15,7 +15,7 @@ export default function Plan({ children, title, price, highlight=false, buttonTi
             <div className="flex flex-col gap-2 min-h-[200px]">
                 {children}
             </div>
-            <Link href="/comingsoon">
+            <Link href="/dashboard/sign-up">
                 <button className={`w-full shadow-md ${highlight ? "bg-red-500 hover:bg-red-600" : "bg-gray-700 hover:bg-gray-800"} hover:shadow-lg rounded-lg text-gray-50 py-[10px] smoothe tracking-wide`}>{buttonTitle}</button>
             </Link>
         </div>

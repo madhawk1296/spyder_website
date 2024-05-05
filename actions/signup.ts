@@ -1,6 +1,7 @@
 'use server'
 
 import { supabaseServerClient } from "@/clients/supabase"
+import { createDatabase } from "@/tools/database"
 
 export default async function signUp(formData: FormData): Promise<{error: string | null, data: string | null}> {
     const email = formData.get("email") as string
@@ -9,7 +10,7 @@ export default async function signUp(formData: FormData): Promise<{error: string
 
     const supabase = supabaseServerClient()
 
-    try {
+    try { 
         const { data: plans, error: tierError } = await supabase.from("subscription_tiers").select()
         if(tierError) {
             throw Error(tierError.message)
@@ -24,6 +25,8 @@ export default async function signUp(formData: FormData): Promise<{error: string
         if(error) {
             throw Error(error.message)
         }
+
+        await createDatabase(user!.id!)
 
         return { error: null, data: email}
 

@@ -143,7 +143,7 @@ export async function getSubgraph(userId: string, schema_name: string): Promise<
     }
 }
 
-export async function CreateDatabase(userId: string) {
+export async function createDatabase(userId: string) {
     const pg = defaultPgClient()
     await pg.connect();
 

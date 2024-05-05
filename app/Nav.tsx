@@ -43,10 +43,10 @@ export default function Nav({ priceRef, faqRef }: { priceRef: RefObject<HTMLDivE
                     <NavButton title="FAQ" onClick={scrollFaq} />
                 </div>
                 <div className={`flex items-center gap-4 ${kanit.medium}`}>
-                    <Link href="/comingsoon">
+                    <Link href="/dashboard/sign-in">
                         <button className="text-lg py-[5px] px-[15px] rounded-xl shadow-md text-gray-800 bg-gray-50 tracking-wider smoothe hover:bg-gray-100 hover:shadow-lg">Log in</button>
                     </Link>
-                    <Link href="/comingsoon">
+                    <Link href="/dashboard/sign-up">
                         <button className="text-lg bg-red-500 py-[5px] px-[15px] rounded-xl shadow-md text-gray-50 tracking-wider smoothe hover:bg-red-600 hover:shadow-lg">Start Free Trial</button>
                     </Link>
                 </div>
