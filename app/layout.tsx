@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import kanit from '@/fonts/kanit'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { CSPostHogProvider } from './Provider'
 
 export const metadata: Metadata = {
   title: 'Spidey - Create Subgraphs in Minutes',
@@ -11,9 +12,11 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={kanit.medium}>
-      <body>
-        {children}
-      </body>
+      <CSPostHogProvider>
+        <body>
+          {children}
+        </body>
+      </CSPostHogProvider>
       <GoogleAnalytics gaId="AW-16548335604" />
     </html>
   )
